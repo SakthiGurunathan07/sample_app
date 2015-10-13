@@ -9,6 +9,7 @@ group :development, :test do
   gem 'guard-spork', '1.2.0'
   gem 'childprocess', '0.3.6'
   gem 'spork', '0.9.2'
+  gem 'sqlite3', '1.3.5'
 end
 
 # Gems used only for assets and not required
@@ -27,4 +28,6 @@ group :test do
   gem 'libnotify', '0.5.9'
 
 end
+
+
 
