@@ -1,7 +1,7 @@
 class MicropostsController < ApplicationController
 
-  before_filter :signed_in_user, only: [:create, :destroy]
-  before_filter :correct_user,   only: :destroy
+  before_filter :signed_in_user, only: [:create, :destroy ,:likes , :show_likes]
+  before_filter :correct_user,   only: [:destroy ,:likes , :show_likes]
   def index
   end
 
@@ -22,6 +22,18 @@ class MicropostsController < ApplicationController
     redirect_to root_url
   end
 
+
+  def likes
+     @micropost = current_user.microposts.find_by_id(params[:id])
+
+     if @micropost.update_attributes(:likes =>  @micropost.likes+1 )       
+        redirect_to user_url
+      end
+
+  end
+
+
+  
   private
 
     def correct_user

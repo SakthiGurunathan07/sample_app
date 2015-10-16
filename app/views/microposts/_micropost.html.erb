@@ -7,5 +7,8 @@
     <%= link_to "delete", micropost, method: :delete,
                                      data: { confirm: "You sure?" },
                                      title: micropost.content %>
+
+    <%= link_to "likes", :controller => :microposts, :action => :likes %>   
+    <%= micropost.likes %> Likes
   <% end %>
 </li>
