@@ -1,6 +1,7 @@
 class Micropost < ActiveRecord::Base
-  attr_accessible :content , :likes
+  attr_accessible :content 
   belongs_to :user
+  has_many :likes ,  dependent: :destroy
   
   validates :user_id, presence: true
  
@@ -12,4 +13,7 @@ class Micropost < ActiveRecord::Base
     followed_user_ids = user.followed_user_ids
     where("user_id IN (?) OR user_id = ?", followed_user_ids, user)
   end
+
+
+
 end

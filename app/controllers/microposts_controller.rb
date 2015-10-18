@@ -1,7 +1,10 @@
 class MicropostsController < ApplicationController
 
-  before_filter :signed_in_user, only: [:create, :destroy ,:likes , :show_likes]
-  before_filter :correct_user,   only: [:destroy ,:likes , :show_likes]
+  before_filter :signed_in_user, only: [:create, :destroy ,:likes,:unlikes]
+  before_filter :correct_user,   only: [:destroy ]
+  before_filter :find_post,   only: [:likes ,:unlikes]
+  before_filter :user_liked_post ,   only: [:likes ,:unlikes]
+
   def index
   end
 
@@ -20,25 +23,34 @@ class MicropostsController < ApplicationController
  def destroy
     @micropost.destroy
     redirect_to root_url
+ end
+
+ 
+
+ def likes
+     Like.create!(micropost_id: @current_micropost.id, user_id:current_user.id)
+     redirect_to root_url
   end
 
-
-  def likes
-     @micropost = current_user.microposts.find_by_id(params[:id])
-
-     if @micropost.update_attributes(:likes =>  @micropost.likes+1 )       
-        redirect_to user_url
-      end
-
-  end
-
-
-  
+ def unlikes
+    Like.destroy(@user_liked_post)
+    redirect_to root_url
+ end
+ 
   private
 
     def correct_user
       @micropost = current_user.microposts.find_by_id(params[:id])
       redirect_to root_url if @micropost.nil?
     end
+
+    def find_post
+     @current_micropost =Micropost.find(params[:id])   
+    end
+
+    def user_liked_post
+      @user_liked_post=Like.where(["user_id= ? and micropost_id= ?" ,current_user.id ,@current_micropost.id])
+    end
+  
 
 end
