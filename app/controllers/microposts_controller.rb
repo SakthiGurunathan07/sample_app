@@ -3,7 +3,7 @@ class MicropostsController < ApplicationController
   before_filter :signed_in_user, only: [:create, :destroy ,:likes,:unlikes]
   before_filter :correct_user,   only: [:destroy ]
   before_filter :find_post,   only: [:likes ,:unlikes]
-  before_filter :user_liked_post ,   only: [:likes ,:unlikes]
+  before_filter :user_liked_post ,   only: [:unlikes]
 
   def index
   end
@@ -29,13 +29,19 @@ class MicropostsController < ApplicationController
 
  def likes
      Like.create!(micropost_id: @current_micropost.id, user_id:current_user.id)
-     redirect_to root_url
-  end
+     respond_to do |format|
+       format.html { redirect_to root_url }
+       format.js 
+     end
+end
 
  def unlikes
-    Like.destroy(@user_liked_post)
-    redirect_to root_url
- end
+    Like.destroy(@user_liked_post) 
+    respond_to do |format|
+      format.html { redirect_to root_url }
+      format.js 
+    end
+  end
  
   private
 
