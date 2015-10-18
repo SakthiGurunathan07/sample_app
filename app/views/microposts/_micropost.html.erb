@@ -11,5 +11,10 @@
   
   <% end %>
  
+<% if micropost.likes.count >0 %>
+    <%= render 'likes/unlike' , object: micropost %>
+  <%else %>
+    <%= render 'likes/like' ,object: micropost %>
+  <%end%>
 
 </li>
