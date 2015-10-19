@@ -3,7 +3,7 @@
     <span class="user">
       <%= link_to feed_item.user.name, feed_item.user %>
     </span>
-    <span class="content"><%= feed_item.content %></span>
+    <span class="content"><%= link_to feed_item.content , micropost_path(feed_item) %></span>
     <span class="timestamp">
       Posted <%= time_ago_in_words(feed_item.created_at) %> ago.
     </span>
@@ -13,8 +13,9 @@
                                      title: feed_item.content %>
 
   <% end %>
-
-  <% if feed_item.likes.count >0 %>
+  
+  <% user_likes_this_post(current_user , feed_item) %>
+  <% if @liked_it.count.to_i >0 %>
     <%= render 'likes/unlike' , object: feed_item %>
   <%else %>
     <%= render 'likes/like' ,object: feed_item %>

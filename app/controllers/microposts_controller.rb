@@ -1,8 +1,8 @@
 class MicropostsController < ApplicationController
 
-  before_filter :signed_in_user, only: [:create, :destroy ,:likes,:unlikes]
+  before_filter :signed_in_user, only: [:create, :destroy ,:likes,:unlikes, :show]
   before_filter :correct_user,   only: [:destroy ]
-  before_filter :find_post,   only: [:likes ,:unlikes]
+  before_filter :find_post,   only: [:likes ,:unlikes , :show]
   before_filter :user_liked_post ,   only: [:unlikes]
 
   def index
@@ -25,6 +25,10 @@ class MicropostsController < ApplicationController
     redirect_to root_url
  end
 
+ def show
+  @current_micropost
+ end
+
  
 
  def likes
@@ -42,6 +46,7 @@ end
       format.js 
     end
   end
+
  
   private
 

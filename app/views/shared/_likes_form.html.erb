@@ -1,9 +1,0 @@
-<% unless current_user?(@user) %>
-  <div id="likes_form">
-  <% if feed_item.likes.count >0  %>
-	  <%= render 'likes/unlike' , feed_item: feed_item %>
-  <%else %>
-    <%= render 'likes/like' ,feed_item: feed_item %>
-  <%end%>
-  </div>
-<% end %>
