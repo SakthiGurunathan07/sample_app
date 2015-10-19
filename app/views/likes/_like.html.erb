@@ -1,7 +1,7 @@
   <span id="likes_<%=object.id.to_s%>" >
- <%=  link_to "like" ,  likes_micropost_path(object) ,remote: true %>  
+ <%=  link_to "like" , micropost_likes_path(object) ,method: :post ,remote: true %>  
  <% if object.likes.count >0 %>
    <%= pluralize(object.likes.count, "Like") %>  
  <% end %> 
-
+  <%= render 'likes/liked_users',object:object %>
  </span>

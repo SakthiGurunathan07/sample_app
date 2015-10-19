@@ -1,5 +1,5 @@
 <li id="<%= feed_item.id %>">
-  <%= link_to gravatar_for(feed_item.user), feed_item.user %>
+  <%= link_to gravatar_for(feed_item.user,size:52), feed_item.user %>
     <span class="user">
       <%= link_to feed_item.user.name, feed_item.user %>
     </span>
@@ -16,8 +16,11 @@
   
   <% user_likes_this_post(current_user , feed_item) %>
   <% if @liked_it.count.to_i >0 %>
-    <%= render 'likes/unlike' , object: feed_item %>
+    <%= render 'likes/unlike' , object: feed_item , liked_it:@liked_it.first%>
   <%else %>
     <%= render 'likes/like' ,object: feed_item %>
   <%end%>
+
+
+
 </li>

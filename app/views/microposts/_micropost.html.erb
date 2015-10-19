@@ -12,11 +12,11 @@
   <% end %>
 
 
- <% user_likes_this_post(current_user , micropost) %>
+  <% user_likes_this_post(current_user , micropost) %>
   <% if @liked_it.count.to_i >0 %>
-    <%= render 'likes/unlike' , object: micropost %>
+    <%= render 'likes/unlike' , object: micropost , liked_it:@liked_it.first%>
   <%else %>
-    <%= render 'likes/like' ,object: micropost %>
+    <%= render 'likes/like' ,object: micropost ,liked_it:@liked_it.first %>
   <%end%>
 
 </li>

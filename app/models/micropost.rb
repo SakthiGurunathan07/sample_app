@@ -2,7 +2,7 @@ class Micropost < ActiveRecord::Base
   attr_accessible :content 
   belongs_to :user
   has_many :likes ,  dependent: :destroy
-  has_many :comments , dependent: :destroy
+
   
   validates :user_id, presence: true
  
