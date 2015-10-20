@@ -6,8 +6,13 @@ module MicropostsHelper
 
     def list_of_users_liked_this_post(post)
       @liked_users=[]
-      Micropost.find(post).likes.each do |like| 
+      if(!post.nil?) 
+        Micropost.find(post).likes.each do |like| 
           @liked_users << like.user
+        end
       end
     end
+
+
+    
 end

@@ -1,0 +1,1 @@
+$('#likes_<%=@current_micropost.id%>').html("<%= escape_javascript(render 'likes/unlike' ,object: @current_micropost , liked_it: @liked_it ) %>")

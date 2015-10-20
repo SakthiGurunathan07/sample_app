@@ -43,4 +43,34 @@ describe "Micropost pages" do
     end
 
   end
+
+
+  describe "Like" do
+    before { FactoryGirl.create(:micropost, user: user) }
+
+    describe "as correct user" do
+      before { visit root_path }
+
+        it "should like a micropost" do
+          expect { click_link "like" }.to change(Like, :count).by(1)
+        end
+    end
+  end
+
+
+
+  describe "Unlike" do
+    before { FactoryGirl.create(:micropost, user: user) }
+
+    describe "as correct user" do
+      before { visit root_path }
+      before {click_link "like" }   
+      
+        it "should unlike a micropost" do
+          expect { click_link "unlike" }.to change(Like, :count).by(-1)
+        end
+    end
+  end
+
+  
 end

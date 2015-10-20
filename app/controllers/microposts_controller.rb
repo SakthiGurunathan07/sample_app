@@ -5,6 +5,8 @@ class MicropostsController < ApplicationController
   before_filter :find_post,   only: [ :show]
 
 
+def index
+end
 
  def create
     @micropost = current_user.microposts.build(params[:micropost])
@@ -23,9 +25,6 @@ class MicropostsController < ApplicationController
     redirect_to root_url
  end
 
- def show
-  @current_micropost
- end
 
  
  

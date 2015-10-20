@@ -1,0 +1,47 @@
+<% provide(:title, @user.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        <%= gravatar_for( @user , size: 52) %>
+        <%= @user.name %>
+      </h1>
+    </section>
+
+    <section>
+      <%= render 'shared/stats' %>
+    </section>
+  </aside>
+
+   <div class="span8">
+   <%= render 'follow_form' if signed_in? %>
+    <% if @user.microposts.any? %>
+      <h3>Microposts (<%= @user.microposts.count %>)</h3>
+      <h4>Sort the Posts By</h4>
+      <div>
+       <%= form_tag  user_path(@user), method: :get do %>          
+        <%= radio_button_tag  :order, "date"   %> Order By Date
+        <p>
+         <%= radio_button_tag :order, "like" , checked: true %> Order By Like
+        </p>
+        <p>
+         <%= submit_tag "Order It", name: nil, class: "btn btn-primary" %>
+        </p>
+       <% end %>
+       </div>
+     
+      <p>
+      <% #link_to 'order_by_likes' , feeds_by_likes_user_path(@user)%>
+      <p>
+      <% #link_to 'order_by_date' , user_path(@user), method: :get%>
+      <ol class="microposts">
+        <% if @microposts_by_likes.any? %>
+            <% @microposts_by_likes.each do |micropost| %>
+                   <%= render micropost %>
+             <% end %>
+        <% end %>
+      </ol>
+      <%= will_paginate @microposts_by_likes %>
+    <% end %>
+  </div>
+</div>

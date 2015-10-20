@@ -16,7 +16,26 @@
    <div class="span8">
    <%= render 'follow_form' if signed_in? %>
     <% if @user.microposts.any? %>
+
+
       <h3>Microposts (<%= @user.microposts.count %>)</h3>
+      <h4>Sort the Posts By</h4>
+
+      <div>
+       <%= form_tag  user_path(@user), method: :get do %>
+             
+       <%= radio_button_tag :order, "date", checked:true %> Order By Date
+       <p>
+       <%= radio_button_tag :order, "like" %> Order By Like
+       </p>
+       <p>
+       <%= submit_tag "Order It", name: nil,class: "btn btn-primary" %>
+       </p>
+      <% end %>
+      </div>
+      <%# link_to 'order_by_likes' , feeds_by_likes_user_path(@user)%>
+      <p>
+      <%# link_to 'order_by_date' , user_path(@user), method: :get%>
       <ol class="microposts">
         <%= render @microposts %>
       </ol>

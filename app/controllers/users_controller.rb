@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
  before_filter :signed_in_user,
-                only: [:index, :edit, :update, :destroy, :following, :followers]
+                only: [:index, :edit, :update, :destroy, :following, :followers , :show]
  before_filter :correct_user,   only: [:edit, :update]
  before_filter :admin_user,     only: :destroy
    def new
@@ -8,9 +8,20 @@ class UsersController < ApplicationController
    end
 
    def show
-    @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
+     @user = User.find(params[:id])
+     if params[:order] == "like"
+      feeds_by_likes(@user)
+     else
+      @microposts = @user.microposts.paginate(page: params[:page])
+     end
    end
+
+   def feeds_by_likes(user)
+    
+    @microposts_by_likes=  Micropost.unscoped.where("user_id= ?", user.id).order('likes_count DESC').paginate(page: params[:page])
+    render 'users/feed_by_likes'
+   end
+
   def create
     @user = User.new(params[:user])
     if @user.save
